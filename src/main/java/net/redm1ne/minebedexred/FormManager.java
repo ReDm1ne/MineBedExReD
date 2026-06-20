@@ -1,9 +1,9 @@
 package net.redm1ne.minebedexred;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import org.geysermc.cumulus.CustomForm;
+import org.geysermc.cumulus.form.CustomForm;
+import org.geysermc.cumulus.form.util.FormBuilder;
 import org.geysermc.cumulus.response.CustomFormResponse;
-import org.geysermc.cumulus.util.FormBuilder;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
@@ -33,7 +33,7 @@ public class FormManager {
         FloodgatePlayer fPlayer = FloodgateApi.getInstance().getPlayer(player.getUniqueId());
         if (fPlayer == null) return;
 
-        FormBuilder<CustomForm, CustomForm.Builder, CustomFormResponse> builder = CustomForm.builder()
+        FormBuilder<CustomForm.Builder, CustomForm> builder = CustomForm.builder()
                 .title(plugin.getConfig().getString("form.title", "§l§bRegistro / Login"))
                 .label(plugin.getConfig().getString("form.description", "Por favor, introduce tu contraseña para continuar."))
                 .input(
@@ -42,7 +42,7 @@ public class FormManager {
                 )
                 .toggle(plugin.getConfig().getString("form.toggle-recovery", "¿Olvidaste tu contraseña?"), false);
 
-        builder.validResultHandler(response -> {
+        builder.validResultHandler((CustomFormResponse response) -> {
             String password = response.asInput(1);
             Boolean recovery = response.asToggle(2);
 
