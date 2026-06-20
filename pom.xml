@@ -52,12 +52,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>org.geysermc.cumulus</groupId>
-            <artifactId>cumulus</artifactId>
-            <version>1.1.2</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>pl.minecodes.minelogin</groupId>
             <artifactId>bungeecord-api</artifactId>
             <version>1.6.0</version>
