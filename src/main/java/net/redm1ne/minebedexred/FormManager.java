@@ -33,7 +33,7 @@ public class FormManager {
         FloodgatePlayer fPlayer = FloodgateApi.getInstance().getPlayer(player.getUniqueId());
         if (fPlayer == null) return;
 
-        FormBuilder<CustomForm.Builder, CustomForm> builder = CustomForm.builder()
+        FormBuilder<CustomForm.Builder, CustomForm, CustomFormResponse> builder = CustomForm.builder()
                 .title(plugin.getConfig().getString("form.title", "§l§bRegistro / Login"))
                 .label(plugin.getConfig().getString("form.description", "Por favor, introduce tu contraseña para continuar."))
                 .input(
