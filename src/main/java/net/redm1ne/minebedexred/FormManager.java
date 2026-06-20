@@ -1,6 +1,9 @@
 package net.redm1ne.minebedexred;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.geysermc.cumulus.CustomForm;
+import org.geysermc.cumulus.response.CustomFormResponse;
+import org.geysermc.cumulus.util.FormBuilder;
 import org.geysermc.floodgate.api.FloodgateApi;
 import org.geysermc.floodgate.api.player.FloodgatePlayer;
 
@@ -30,34 +33,33 @@ public class FormManager {
         FloodgatePlayer fPlayer = FloodgateApi.getInstance().getPlayer(player.getUniqueId());
         if (fPlayer == null) return;
 
-        fPlayer.sendForm(formBuilder -> {
-            formBuilder.title(plugin.getConfig().getString("form.title", "§l§bRegistro / Login"));
-            formBuilder.label(plugin.getConfig().getString("form.description", "Por favor, introduce tu contraseña para continuar."));
-            formBuilder.input(
-                plugin.getConfig().getString("form.input-text", "Contraseña:"),
-                plugin.getConfig().getString("form.input-placeholder", "Tu contraseña secreta")
-            );
-            formBuilder.toggle(plugin.getConfig().getString("form.toggle-recovery", "¿Olvidaste tu contraseña?"), false);
+        FormBuilder<CustomForm, CustomForm.Builder, CustomFormResponse> builder = CustomForm.builder()
+                .title(plugin.getConfig().getString("form.title", "§l§bRegistro / Login"))
+                .label(plugin.getConfig().getString("form.description", "Por favor, introduce tu contraseña para continuar."))
+                .input(
+                    plugin.getConfig().getString("form.input-text", "Contraseña:"),
+                    plugin.getConfig().getString("form.input-placeholder", "Tu contraseña secreta")
+                )
+                .toggle(plugin.getConfig().getString("form.toggle-recovery", "¿Olvidaste tu contraseña?"), false);
 
-            formBuilder.validResultHandler(response -> {
-                String password = response.asInput(1);
-                Boolean recovery = response.asToggle(2);
+        builder.validResultHandler(response -> {
+            String password = response.asInput(1);
+            Boolean recovery = response.asToggle(2);
 
-                if (recovery != null && recovery) {
-                    String recCmd = plugin.getConfig().getString("form.recovery-command", "/recuperar");
-                    player.chat(recCmd);
-                } else if (password != null && !password.isEmpty()) {
-                    player.chat("/login " + password);
-                } else {
-                    scheduleReopen(player);
-                }
-            });
-
-            formBuilder.closedOrInvalidResultHandler(() -> {
+            if (recovery != null && recovery) {
+                String recCmd = plugin.getConfig().getString("form.recovery-command", "/recuperar");
+                player.chat(recCmd);
+            } else if (password != null && !password.isEmpty()) {
+                player.chat("/login " + password);
+            } else {
                 scheduleReopen(player);
-            });
-
-            return formBuilder.build();
+            }
         });
+
+        builder.closedOrInvalidResultHandler(() -> {
+            scheduleReopen(player);
+        });
+
+        fPlayer.sendForm(builder.build());
     }
 }
