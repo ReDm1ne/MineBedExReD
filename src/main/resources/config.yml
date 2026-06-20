@@ -1,0 +1,22 @@
+#===============================================================
+#  __  __  ____   _____ __  __
+# |  \/  ||  _ \ | ____|\ \/ /
+# | |\/| || |_) ||  _|   \  /
+# | |  | ||  _ < | |___  /  \
+# |_|  |_||____/ |_____|/_/\_\
+# By ReDm1ne
+# Version: ${project.version}
+#===============================================================
+# Retraso antes de abrir el formulario al conectar (en milisegundos)
+initial-open-delay-ms: 1000
+
+# Retraso antes de reabrir el formulario tras error/cierre (en segundos)
+reopen-delay-seconds: 4
+
+form:
+  title: "§l§bRegistro / Login"
+  description: "Por favor, introduce tu contraseña para continuar."
+  input-text: "Contraseña:"
+  input-placeholder: "Tu contraseña secreta"
+  toggle-recovery: "¿Olvidaste tu contraseña?"
+  recovery-command: "/recuperar"

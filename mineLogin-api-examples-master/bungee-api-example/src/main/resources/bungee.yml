@@ -1,0 +1,6 @@
+name: mineLogin-api-example
+version: 1.0
+main: pl.minecodes.bungee.BungeePlugin
+author: mineCodes
+depends:
+  - mineLogin

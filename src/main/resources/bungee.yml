@@ -1,0 +1,5 @@
+name: MineBedExReD
+version: ${project.version}
+main: net.redm1ne.minebedexred.MineBedExReD
+author: Redm1ne
+depends: [floodgate, mineLogin, Geyser-BungeeCord]
